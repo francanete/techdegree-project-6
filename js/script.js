@@ -62,6 +62,7 @@ function showPage(list, page) {
 
       }
    }
+   searchPage()
 }
 
 
@@ -117,6 +118,32 @@ function addPagination(list) {
       }
    });
 }
+
+
+/**  Search Feature  **/
+
+function searchPage() {
+   const header = document.querySelector('.header');
+   const label = document.createElement('label');
+   label.htmlFor = 'search';
+   label.className = 'student-search';
+   header.insertAdjacentElement('beforeend', label);
+
+   const span = document.createElement('span');
+   span.textContent = 'Search by name';
+   label.insertAdjacentElement('beforeend', span);
+
+   const input = document.createElement('input');
+   input.id = 'search';
+   input.placeholder = 'Search by name...';
+   label.insertAdjacentElement('beforeend', input);
+
+   const button = document.createElement('button');
+   button.type = 'button';
+   label.insertAdjacentElement('beforeend', button);
+   button.innerHTML = '<img src="img/icn-search.svg" alt="Search icon">';
+}
+
 
 /**  Call functions  **/
 
