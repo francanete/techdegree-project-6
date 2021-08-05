@@ -43,6 +43,10 @@ header h2 {
 	margin-bottom: 25px;
 }
 
+header h3 {
+  align-items: flex-end;
+}
+
 
 
 .student-search {

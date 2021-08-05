@@ -2,6 +2,14 @@
 
 const itemsPerPage = 9;
 
+
+/**  Call functions  **/
+
+showPage(data, 1);
+addPagination(data);
+searchPage();
+
+
 /*
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
@@ -39,16 +47,16 @@ function showPage(list, page) {
 
          const img = document.createElement('img');
          img.className = 'avatar';
-         img.src = data[i].picture.medium;
+         img.src = list[i].picture.medium;
          divStudentDetails.insertAdjacentElement('beforeend', img);
 
          const name = document.createElement('h3');
-         name.textContent = `${data[i].name.first} ${data[i].name.last}`;
+         name.textContent = `${list[i].name.first} ${list[i].name.last}`;
          divStudentDetails.insertAdjacentElement('beforeend', name);
 
          const email = document.createElement('span');
          email.className = 'email';
-         email.textContent = data[i].email;
+         email.textContent = list[i].email;
          divStudentDetails.insertAdjacentElement('beforeend', email);
 
          const divJoinedDetails = document.createElement('div');
@@ -57,12 +65,12 @@ function showPage(list, page) {
 
          const dateJoined = document.createElement('span');
          dateJoined.className = 'date';
-         dateJoined.textContent = `Joined ${data[i].registered.date}`;
+         dateJoined.textContent = `Joined ${list[i].registered.date}`;
          divJoinedDetails.insertAdjacentElement('beforeend', dateJoined);
 
       }
-   }
-   searchPage()
+   } 
+   addPagination(list);
 }
 
 
@@ -114,7 +122,7 @@ function addPagination(list) {
          activeBtn = document.querySelector('.active');
          activeBtn.className = '';
          e.target.className = 'active';
-         showPage(data, e.target.textContent);
+         showPage(list, e.target.textContent);
       }
    });
 }
@@ -145,8 +153,29 @@ function searchPage() {
 }
 
 
-/**  Call functions  **/
 
-showPage(data, 1);
-addPagination(data);
+/** Event listener to add functionality to the Searh Component **/
 
+const search = document.getElementById('search');
+
+
+search.addEventListener('keyup', (e) => {
+   const searchName = e.target.value.toLowerCase();
+   const filteredCharacters = data.filter((data) => {
+      return (
+          data.name.first.toLowerCase().includes(searchName) ||
+          data.name.last.toLowerCase().includes(searchName)
+      );
+   });
+
+   if (filteredCharacters.length === 0) {
+      const notFound = document.querySelector('.student-list');
+      const notFoundMessage = document.createElement('h2');
+      notFound.textContent = "hola puto";
+      notFound.insertAdjacentElement('beforebegin', notFoundMessage);
+      console.log("hola");
+   }
+
+   showPage(filteredCharacters, 1);
+   addPagination(data);
+});
