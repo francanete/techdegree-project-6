@@ -52,7 +52,6 @@ function showPage(list, page) {
 
       }
    } 
-   addPagination(list);
 }
 
 
@@ -76,7 +75,7 @@ function addPagination(list) {
       buttonLi.insertAdjacentElement('beforeend', button);
    }
 
-   const firstBtn = document.querySelector('BUTTON')
+   const firstBtn = document.querySelector('.link-list li button');
    firstBtn.className = 'active';
 
    linkList.addEventListener('click', (e) => {
@@ -142,7 +141,6 @@ search.addEventListener('keyup', (e) => {
    } else {
       notFound.textContent = "Students";
    }
-
    showPage(filteredCharacters, 1);
    addPagination(filteredCharacters);
 });
