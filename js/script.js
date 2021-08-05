@@ -3,36 +3,18 @@
 const itemsPerPage = 9;
 
 
-/**  Call functions  **/
-
-showPage(data, 1);
-addPagination(data);
-searchPage();
-
-
-/*
-Create the `showPage` function
-This function will create and insert/append the elements needed to display a "page" of nine students
-*/
+/**   showPage function 
+Creates and appends necessary elemnts to display all students profiles.
+@param {array of objects} list - an array of objects stores all students data.
+@param {Number} page - indicates the first page to be displayed at the initial "students page"
+**/
 
 
 function showPage(list, page) {
-   // create two variables which will represent the index for the first and last student on the page
    const startIndex = (page * itemsPerPage) - itemsPerPage;
    const endIndex = page * itemsPerPage;
-
-  // select the element with a class of `student-list` and assign it to a variable
    const studentList = document.querySelector('ul.student-list');
-
-  // set the innerHTML property of the variable you just created to an empty string
    studentList.innerHTML = '';
-
-   // loop over the length of the `list` parameter
-      // inside the loop create a conditional to display the proper students
-         // inside the conditional:
-         // create the elements needed to display the student information
-         // insert the above elements
-
 
    for (let i = 0; i < list.length; i++){
       if ( i >= startIndex && i < endIndex ) {
@@ -74,28 +56,16 @@ function showPage(list, page) {
 }
 
 
-/*
-Create the `addPagination` function
-This function will create and insert/append the elements needed for the pagination buttons
-*/
+
+/**   showPage function 
+Creates and appends necessary elemnts needed for the pagination buttons.
+@param {array of objects} list - an array of objects stores all students data.
+**/
 
 function addPagination(list) {
-   // create a variable to calculate the number of pages needed
    const numOfPages = Math.ceil((list.length / itemsPerPage ));
-
-   // select the element with a class of `link-list` and assign it to a variable
-
    const linkList = document.querySelector('.link-list');
-
-   // set the innerHTML property of the variable you just created to an empty string
-
    linkList.innerHTML = '';
-
-
-   // loop over the number of pages needed
-      // create the elements needed to display the pagination button
-      // insert the above elements
-
 
    for (let i = 1; i <= numOfPages; i++) {
       const buttonLi = document.createElement('li');
@@ -106,16 +76,8 @@ function addPagination(list) {
       buttonLi.insertAdjacentElement('beforeend', button);
    }
 
-    // give the first pagination button a class of "active"
-
-    const firstBtn = document.querySelector('BUTTON')
-    firstBtn.className = 'active';
-
-    // create an event listener on the `link-list` element
-      // if the click target is a button:
-         // remove the "active" class from the previous button
-         // add the active class to the clicked button
-         // call the showPage function passing the `list` parameter and page to display as arguments
+   const firstBtn = document.querySelector('BUTTON')
+   firstBtn.className = 'active';
 
    linkList.addEventListener('click', (e) => {
       if ( e.target.tagName === 'BUTTON' ) {
@@ -128,7 +90,9 @@ function addPagination(list) {
 }
 
 
-/**  Search Feature  **/
+/**  searchPage function  
+ Create and appends the search feature at the top of the page
+ **/
 
 function searchPage() {
    const header = document.querySelector('.header');
@@ -152,30 +116,33 @@ function searchPage() {
    button.innerHTML = '<img src="img/icn-search.svg" alt="Search icon">';
 }
 
+/**  Call functions  **/
+
+showPage(data, 1);
+addPagination(data);
+searchPage();
 
 
 /** Event listener to add functionality to the Searh Component **/
 
 const search = document.getElementById('search');
 
-
 search.addEventListener('keyup', (e) => {
    const searchName = e.target.value.toLowerCase();
+   const notFound = document.querySelector('.header h2');
    const filteredCharacters = data.filter((data) => {
       return (
-          data.name.first.toLowerCase().includes(searchName) ||
-          data.name.last.toLowerCase().includes(searchName)
-      );
-   });
-
+         data.name.first.toLowerCase().includes(searchName) ||
+         data.name.last.toLowerCase().includes(searchName)
+         );
+      });
+      
    if (filteredCharacters.length === 0) {
-      const notFound = document.querySelector('.student-list');
-      const notFoundMessage = document.createElement('h2');
-      notFound.textContent = "hola puto";
-      notFound.insertAdjacentElement('beforebegin', notFoundMessage);
-      console.log("hola");
+      notFound.textContent = "No results found";
+   } else {
+      notFound.textContent = "Students";
    }
 
    showPage(filteredCharacters, 1);
-   addPagination(data);
+   addPagination(filteredCharacters);
 });
